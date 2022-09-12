@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: BlocProvider(
         create: (context) => BlocProvider.of<AuthBloc>(context),
-        child: LoginPage(),
+        child: const LoginPage(),
       ),
     );
   }

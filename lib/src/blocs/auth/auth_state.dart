@@ -1,6 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_weather_app/src/models/forecast.model.dart';
-import 'package:flutter_weather_app/src/models/report.model.dart';
 import 'package:flutter_weather_app/src/models/user.model.dart';
 
 abstract class AuthState extends Equatable {

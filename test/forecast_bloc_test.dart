@@ -2,12 +2,9 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_weather_app/src/blocs/base/bloc.dart';
-import 'package:flutter_weather_app/src/helpers/connection.helper.dart';
 import 'package:flutter_weather_app/src/models/report.model.dart';
 import 'package:flutter_weather_app/src/models/response.model.dart';
-import 'package:flutter_weather_app/src/repositories/auth.repository.dart';
 import 'package:flutter_weather_app/src/repositories/forecast.repository.dart';
-import 'package:flutter_weather_app/src/repositories/sources/network/auth.service.dart';
 import 'package:flutter_weather_app/src/repositories/sources/network/forecast.service.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -34,9 +31,9 @@ void main() {
     blocTest(
       'emits [ForecastLoading, ForecastLoaded] when successful',
       build: () => ForecastBloc(mockForecastRepository),
-      act: (ForecastBloc bloc) => bloc.add(GetForecast("Paris")),
+      act: (ForecastBloc bloc) => bloc.add(const GetForecast("Paris")),
       expect: () => [
-        ForecastLoading(),
+        const ForecastLoading(),
         ForecastLoaded(successResponse.data),
       ],
     );
@@ -44,20 +41,20 @@ void main() {
     blocTest(
       'emits [ForecastLoading, ForecastError] when unsuccessful',
       build: () => ForecastBloc(mockForecastRepository),
-      act: (ForecastBloc bloc) => bloc.add(GetForecast("")),
+      act: (ForecastBloc bloc) => bloc.add(const GetForecast("")),
       expect: () => [
-        ForecastLoading(),
-        ForecastError("An error occured"),
+        const ForecastLoading(),
+        const ForecastError("An error occured"),
       ],
     );
 
     blocTest(
       'emits [ForecastLoading, ForecastError] when Dio throws an error',
       build: () => ForecastBloc(mockForecastRepository),
-      act: (ForecastBloc bloc) => bloc.add(GetForecast("CrashMe")),
+      act: (ForecastBloc bloc) => bloc.add(const GetForecast("CrashMe")),
       expect: () => [
-        ForecastLoading(),
-        ForecastError("Couldn't fetch forecast."),
+        const ForecastLoading(),
+        const ForecastError("Couldn't fetch forecast."),
       ],
     );
   });

@@ -18,7 +18,7 @@ class WeatherCard extends StatelessWidget {
       height: 150,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
             colors: [
@@ -45,7 +45,7 @@ class WeatherCard extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Flexible(
                   child: Text(
                     description,
@@ -59,7 +59,7 @@ class WeatherCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(
                   dateFormatter.format(date),
                   overflow: TextOverflow.ellipsis,

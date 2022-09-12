@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather_app/src/blocs/auth/auth_event.dart';
 import 'package:flutter_weather_app/src/blocs/base/bloc.dart';
+import 'package:flutter_weather_app/src/values/colors.dart';
 import '../../blocs/auth/auth_bloc.dart';
 import '../../blocs/auth/auth_state.dart';
 import 'package:flutter_weather_app/src/helpers/utils.dart';
 import 'package:flutter_weather_app/src/pages/forecast/forecast.search.dart';
-import 'package:flutter_weather_app/src/repositories/sources/network/base/endpoints.dart' as Endpoints;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({
@@ -22,10 +22,10 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login"),
+        title: const Text("Login"),
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 16),
+        padding: const EdgeInsets.symmetric(vertical: 16),
         alignment: Alignment.center,
         child: BlocListener<AuthBloc, AuthState>(
           listener: (context, state) {
@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
                 MaterialPageRoute(
                   builder: (_) => BlocProvider.value(
                     value: BlocProvider.of<ForecastBloc>(context),
-                    child: ForecastSearchPage(),
+                    child: const ForecastSearchPage(),
                   ),
                 ),
               );
@@ -85,13 +85,13 @@ class LoginForm extends StatelessWidget {
     TextEditingController _passwordController = TextEditingController();
 
     return Padding(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: Form(
         key: _formKey,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextFormField(
               controller: _loginController,
               decoration: const InputDecoration(
@@ -105,7 +105,7 @@ class LoginForm extends StatelessWidget {
                 }
               },
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextFormField(
               controller: _passwordController,
               decoration: const InputDecoration(
@@ -120,11 +120,12 @@ class LoginForm extends StatelessWidget {
                 }
               },
             ),
-            SizedBox(height: 20),
-            TextButton(
+            const SizedBox(height: 20),
+            ElevatedButton(
               child: const Text('Valider'),
               style: TextButton.styleFrom(
-                primary: Colors.grey,
+                primary: accentColor,
+                backgroundColor: lightGrey,
               ),
               onPressed: () {
                 if (_formKey.currentState != null && _formKey.currentState!.validate()) {

@@ -12,15 +12,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void _onGetAuth(GetAuth event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
+    emit(const AuthLoading());
     try {
       final response = await repository.login(event.login, event.password);
-      if (response.status == 201)
+      if (response.status == 201) {
         emit(AuthLoaded(response.data));
-      else
+      } else {
         emit(AuthError(response.message));
+      }
     } on DioError {
-      emit(AuthError("Couldn't fetch auth."));
+      emit(const AuthError("Couldn't fetch auth."));
     }
   }
 }

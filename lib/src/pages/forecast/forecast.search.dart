@@ -24,7 +24,7 @@ class _ForecastSearchPageState extends State<ForecastSearchPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    BlocProvider.of<ForecastBloc>(context)..add(GetForecast("Paris"));
+    BlocProvider.of<ForecastBloc>(context)..add(const GetForecast("Paris"));
   }
 
   @override
@@ -45,7 +45,7 @@ class _ForecastSearchPageState extends State<ForecastSearchPage> {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 16),
+        padding: const EdgeInsets.symmetric(vertical: 16),
         alignment: Alignment.center,
         child: BlocListener<ForecastBloc, ForecastState>(
           listener: (context, state) {
@@ -94,17 +94,17 @@ class _ForecastSearchPageState extends State<ForecastSearchPage> {
       shrinkWrap: true,
       children: [
         CityInputField(),
-        SizedBox(height: 20),
-        Text("Prévisions météo pour:", textAlign: TextAlign.center),
-        SizedBox(height: 10),
-        Text(city, style: TextStyle(fontSize: 25), textAlign: TextAlign.center),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
+        const Text("Prévisions météo pour:", textAlign: TextAlign.center),
+        const SizedBox(height: 10),
+        Text(city, style: const TextStyle(fontSize: 25), textAlign: TextAlign.center),
+        const SizedBox(height: 20),
         ListView.separated(
             shrinkWrap: true,
             itemCount: report.list?.length ?? 0,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) => _buildWeatherCard(report.list!.elementAt(index)),
-            separatorBuilder: (context, index) => SizedBox(height: 15)),
+            separatorBuilder: (context, index) => const SizedBox(height: 15)),
       ],
     );
   }
@@ -140,7 +140,7 @@ class CityInputField extends StatelessWidget {
         decoration: InputDecoration(
           hintText: "Chercher une ville",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-          suffixIcon: Icon(Icons.search),
+          suffixIcon: const Icon(Icons.search),
         ),
       ),
     );

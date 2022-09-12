@@ -21,7 +21,7 @@ void main() => runApp(
                 ConnectionHelper(),
               ),
             ),
-            child: LoginPage(),
+            child: const LoginPage(),
           ),
           BlocProvider(
             create: (context) => ForecastBloc(
@@ -30,7 +30,7 @@ void main() => runApp(
                 ConnectionHelper(),
               ),
             ),
-            child: ForecastSearchPage(),
+            child: const ForecastSearchPage(),
           ),
         ],
         child: MyApp(),

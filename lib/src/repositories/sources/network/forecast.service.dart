@@ -1,13 +1,7 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_weather_app/src/helpers/http/http.helper.dart';
-import 'package:flutter_weather_app/src/helpers/storage/storage.helper.dart';
-import 'package:flutter_weather_app/src/helpers/storage/storage.keys.dart';
-import 'package:flutter_weather_app/src/models/forecast.model.dart';
 import 'package:flutter_weather_app/src/models/report.model.dart';
 import 'package:flutter_weather_app/src/models/response.model.dart';
-import 'package:flutter_weather_app/src/models/user.model.dart';
 import './base/endpoints.dart' as Endpoints;
 
 class ForecastService {
@@ -32,8 +26,9 @@ class ForecastService {
         response.data = e.response;
         response.message = e.message;
       }
-      else
-        print(e.toString());
+      else {
+        response.message = "An error occured.";
+      }
     });
 
     return response;

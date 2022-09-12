@@ -12,15 +12,17 @@ class ForecastBloc extends Bloc<ForecastEvent, ForecastState> {
   }
 
   void _onGetForecast(GetForecast event, Emitter<ForecastState> emit) async {
-    emit(ForecastLoading());
+    emit(const ForecastLoading());
     try {
       final response = await repository.fetchFiveDayForecast(event.cityName);
-      if (response.status == 200)
+      if (response.status == 200) {
         emit(ForecastLoaded(response.data));
-      else
+      }
+      else {
         emit(ForecastError(response.message));
+      }
     } on DioError {
-      emit(ForecastError("Couldn't fetch forecast."));
+      emit(const ForecastError("Couldn't fetch forecast."));
     }
   }
 }

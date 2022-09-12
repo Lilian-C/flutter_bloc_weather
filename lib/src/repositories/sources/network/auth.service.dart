@@ -24,7 +24,7 @@ class AuthService {
       return Response(
           statusCode: 201,
           statusMessage: "",
-          data: jsonDecode('{"id": 0, "email": "$login", "username": "OuiSNCF"}') as Map<String, dynamic>,
+          data: jsonDecode('{"id": 0, "email": "$login", "username": "SNCF"}') as Map<String, dynamic>,
           requestOptions: RequestOptions(path: url, method: 'GET'));
     });
 
@@ -42,7 +42,7 @@ class AuthService {
         response.data = e.response;
         response.message = e.message;
       } else {
-        print(e.toString());
+        response.message = "An error occured.";
       }
     });
 
