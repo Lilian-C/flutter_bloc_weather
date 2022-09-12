@@ -16,7 +16,7 @@ class ReportModel {
     if (json['list'] != null) {
       list = <ForecastModel>[];
       json['list'].forEach((v) {
-        list!.add(new ForecastModel.fromJson(v));
+        list!.add(ForecastModel.fromJson(v));
       });
     }
     if (json['city'] != null) {
@@ -36,18 +36,18 @@ class City {
   City.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    coord = json['coord'] != null ? new Coord.fromJson(json['coord']) : null;
+    coord = json['coord'] != null ? Coord.fromJson(json['coord']) : null;
     country = json['country'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    if (this.coord != null) {
-      data['coord'] = this.coord!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    if (coord != null) {
+      data['coord'] = coord!.toJson();
     }
-    data['country'] = this.country;
+    data['country'] = country;
     return data;
   }
 }
@@ -64,9 +64,9 @@ class Coord {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['lat'] = this.lat;
-    data['lon'] = this.lon;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['lat'] = lat;
+    data['lon'] = lon;
     return data;
   }
 }

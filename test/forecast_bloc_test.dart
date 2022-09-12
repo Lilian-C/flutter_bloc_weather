@@ -30,8 +30,8 @@ void main() {
 
     blocTest(
       'emits [ForecastLoading, ForecastLoaded] when successful',
-      build: () => ForecastBloc(mockForecastRepository),
-      act: (ForecastBloc bloc) => bloc.add(const GetForecast("Paris")),
+      build: () => ForecastCubit(mockForecastRepository),
+      act: (ForecastCubit bloc) => bloc.onGetForecast("Paris"),
       expect: () => [
         const ForecastLoading(),
         ForecastLoaded(successResponse.data),
@@ -40,8 +40,8 @@ void main() {
 
     blocTest(
       'emits [ForecastLoading, ForecastError] when unsuccessful',
-      build: () => ForecastBloc(mockForecastRepository),
-      act: (ForecastBloc bloc) => bloc.add(const GetForecast("")),
+      build: () => ForecastCubit(mockForecastRepository),
+      act: (ForecastCubit bloc) => bloc.onGetForecast("city"),
       expect: () => [
         const ForecastLoading(),
         const ForecastError("An error occured"),
@@ -50,8 +50,8 @@ void main() {
 
     blocTest(
       'emits [ForecastLoading, ForecastError] when Dio throws an error',
-      build: () => ForecastBloc(mockForecastRepository),
-      act: (ForecastBloc bloc) => bloc.add(const GetForecast("CrashMe")),
+      build: () => ForecastCubit(mockForecastRepository),
+      act: (ForecastCubit bloc) => bloc.onGetForecast("CrashMe"),
       expect: () => [
         const ForecastLoading(),
         const ForecastError("Couldn't fetch forecast."),

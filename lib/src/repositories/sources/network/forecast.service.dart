@@ -2,14 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter_weather_app/src/helpers/http/http.helper.dart';
 import 'package:flutter_weather_app/src/models/report.model.dart';
 import 'package:flutter_weather_app/src/models/response.model.dart';
-import './base/endpoints.dart' as Endpoints;
+import './base/endpoints.dart' as endpoints;
 
 class ForecastService {
   Future<ResponseModel> getForecast(String city) async {
     ResponseModel response = ResponseModel();
     ReportModel forecasts;
 
-    final String url = Endpoints.forecast.fiveDayForecasts;
+    final String url = endpoints.forecast.fiveDayForecasts;
     final queryParameters = {"q": city, "lang": "fr"};
     final retForecast = HttpHelper.get(url, queryParameters: queryParameters);
 

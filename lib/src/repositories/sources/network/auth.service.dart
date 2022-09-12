@@ -5,15 +5,16 @@ import 'package:flutter_weather_app/src/helpers/storage/storage.helper.dart';
 import 'package:flutter_weather_app/src/helpers/storage/storage.keys.dart';
 import 'package:flutter_weather_app/src/models/response.model.dart';
 import 'package:flutter_weather_app/src/models/user.model.dart';
-import './base/endpoints.dart' as Endpoints;
+import './base/endpoints.dart' as endpoints;
 
 class AuthService {
   Future<ResponseModel> login(String login, String password) async {
     ResponseModel response = ResponseModel();
     UserModel user;
 
-    final String url = Endpoints.auth.login;
+    final String url = endpoints.auth.login;
 
+    // ignore_for_file: unused_local_variable
     final payload = {login, password};
 
     // We don't make a real call this time:

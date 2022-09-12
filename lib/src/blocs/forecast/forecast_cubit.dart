@@ -1,20 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_weather_app/src/blocs/forecast/forecast_event.dart';
 import 'forecast_state.dart';
 import 'package:flutter_weather_app/src/repositories/forecast.repository.dart';
 
-class ForecastBloc extends Bloc<ForecastEvent, ForecastState> {
+class ForecastCubit extends Cubit<ForecastState> {
   final ForecastRepository repository;
 
-  ForecastBloc(this.repository) : super(const ForecastInitial()) {
-    on<GetForecast>(_onGetForecast);
-  }
+  ForecastCubit(this.repository) : super(const ForecastInitial());
 
-  void _onGetForecast(GetForecast event, Emitter<ForecastState> emit) async {
+  void onGetForecast(String city) async {
     emit(const ForecastLoading());
     try {
-      final response = await repository.fetchFiveDayForecast(event.cityName);
+      final response = await repository.fetchFiveDayForecast(city);
       if (response.status == 200) {
         emit(ForecastLoaded(response.data));
       }

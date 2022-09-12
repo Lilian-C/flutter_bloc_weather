@@ -3,12 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather_app/src/blocs/base/bloc.dart';
 import 'package:flutter_weather_app/src/helpers/storage/storage.helper.dart';
 import 'package:flutter_weather_app/src/helpers/storage/storage.keys.dart';
-import '../../blocs/forecast/forecast_bloc.dart';
+import 'package:flutter_weather_app/src/widgets/centered_loading.dart';
+import '../../blocs/forecast/forecast_cubit.dart';
 import '../../blocs/forecast/forecast_state.dart';
 import 'package:flutter_weather_app/src/helpers/utils.dart';
 import 'package:flutter_weather_app/src/models/forecast.model.dart';
 import 'package:flutter_weather_app/src/models/report.model.dart';
-import 'package:flutter_weather_app/src/repositories/sources/network/base/endpoints.dart' as Endpoints;
+import 'package:flutter_weather_app/src/repositories/sources/network/base/endpoints.dart' as endpoints;
 import 'package:flutter_weather_app/src/widgets/weather_card.dart';
 
 class ForecastSearchPage extends StatefulWidget {
@@ -24,7 +25,7 @@ class _ForecastSearchPageState extends State<ForecastSearchPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    BlocProvider.of<ForecastBloc>(context)..add(const GetForecast("Paris"));
+    BlocProvider.of<ForecastCubit>(context).onGetForecast("Paris");
   }
 
   @override
@@ -47,7 +48,7 @@ class _ForecastSearchPageState extends State<ForecastSearchPage> {
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 16),
         alignment: Alignment.center,
-        child: BlocListener<ForecastBloc, ForecastState>(
+        child: BlocListener<ForecastCubit, ForecastState>(
           listener: (context, state) {
             if (state is ForecastError) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -57,43 +58,39 @@ class _ForecastSearchPageState extends State<ForecastSearchPage> {
               );
             }
           },
-          child: BlocBuilder<ForecastBloc, ForecastState>(
+          child: BlocBuilder<ForecastCubit, ForecastState>(
             builder: (context, state) {
               if (state is ForecastInitial) {
-                return buildInitialInput();
+                return const Center(child: CityInputField());
               } else if (state is ForecastLoading) {
-                return buildLoading();
+                return const CenteredLoading();
               } else if (state is ForecastLoaded) {
-                return buildListViewWithData(context, state.report);
+                return ForecastReport(report: state.report);
               } else if (state is ForecastError) {
-                return buildInitialInput();
+                return const Center(child: CityInputField());
               }
-              return buildLoading();
+              return const CenteredLoading();
             },
           ),
         ),
       ),
     );
   }
+}
 
-  Widget buildInitialInput() {
-    return Center(
-      child: CityInputField(),
-    );
-  }
+class ForecastReport extends StatelessWidget {
+  final ReportModel report;
 
-  Widget buildLoading() {
-    return Center(
-      child: CircularProgressIndicator(),
-    );
-  }
+  const ForecastReport({Key? key, required this.report}) : super(key: key);
 
-  Widget buildListViewWithData(BuildContext context, ReportModel report) {
+  @override
+  Widget build(BuildContext context) {
     String city = report.city?.name ?? "Unknown";
+
     return ListView(
       shrinkWrap: true,
       children: [
-        CityInputField(),
+        const CityInputField(),
         const SizedBox(height: 20),
         const Text("Prévisions météo pour:", textAlign: TextAlign.center),
         const SizedBox(height: 10),
@@ -113,7 +110,7 @@ class _ForecastSearchPageState extends State<ForecastSearchPage> {
     // We could also create an extension fromSecondsSinceEpoch for the DateTime object
     DateTime date = DateTime.fromMillisecondsSinceEpoch((forecast.dt ?? 0) * 1000);
 
-    String imageUrl = Endpoints.forecast.weatherImage + (forecast.weather?[0].icon ?? "") + ".png";
+    String imageUrl = endpoints.forecast.weatherImage + (forecast.weather?[0].icon ?? "") + ".png";
     String description = (forecast.weather?[0].main ?? "") + ": " + (forecast.weather?[0].description ?? "");
     String temperature = forecast.main?.temp != null ? kelvinToCelsius(forecast.main!.temp!).toStringAsFixed(1) + "°" : "";
 
@@ -130,6 +127,8 @@ class _ForecastSearchPageState extends State<ForecastSearchPage> {
 }
 
 class CityInputField extends StatelessWidget {
+  const CityInputField({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -147,7 +146,7 @@ class CityInputField extends StatelessWidget {
   }
 
   void submitCityName(BuildContext context, String cityName) {
-    final forecastBloc = BlocProvider.of<ForecastBloc>(context);
-    forecastBloc.add(GetForecast(cityName));
+    final forecastBloc = BlocProvider.of<ForecastCubit>(context);
+    forecastBloc.onGetForecast(cityName);
   }
 }

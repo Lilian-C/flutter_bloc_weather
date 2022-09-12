@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather_app/src/blocs/auth/auth_event.dart';
 import 'package:flutter_weather_app/src/blocs/base/bloc.dart';
 import 'package:flutter_weather_app/src/values/colors.dart';
+import 'package:flutter_weather_app/src/widgets/centered_loading.dart';
 import '../../blocs/auth/auth_bloc.dart';
 import '../../blocs/auth/auth_state.dart';
 import 'package:flutter_weather_app/src/helpers/utils.dart';
@@ -40,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
                 context,
                 MaterialPageRoute(
                   builder: (_) => BlocProvider.value(
-                    value: BlocProvider.of<ForecastBloc>(context),
+                    value: BlocProvider.of<ForecastCubit>(context),
                     child: const ForecastSearchPage(),
                   ),
                 ),
@@ -50,34 +51,26 @@ class _LoginPageState extends State<LoginPage> {
           child: BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
               if (state is AuthInitial) {
-                return buildInitialInput();
+                return const Center(child: LoginForm());
               } else if (state is AuthLoading) {
-                return buildLoading();
+                return const CenteredLoading();
               } else if (state is AuthError) {
-                return buildInitialInput();
+                return const Center(child: LoginForm());
               }
-              return buildLoading();
+              return const CenteredLoading();
             },
           ),
         ),
       ),
     );
   }
-
-  Widget buildInitialInput() {
-    return Center(
-      child: LoginForm(),
-    );
-  }
-
-  Widget buildLoading() {
-    return Center(
-      child: CircularProgressIndicator(),
-    );
-  }
 }
 
 class LoginForm extends StatelessWidget {
+  const LoginForm({
+    Key? key,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();

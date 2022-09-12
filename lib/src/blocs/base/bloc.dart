@@ -1,5 +1,5 @@
-export '../forecast/forecast_bloc.dart';
-export '../forecast/forecast_event.dart';
+export '../forecast/forecast_cubit.dart';
+export '../forecast/forecast_cubit.dart';
 export '../forecast/forecast_state.dart';
 
 export '../auth/auth_bloc.dart';

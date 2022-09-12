@@ -13,7 +13,7 @@ class AuthRepository {
     final hasConnection = await connectionHelper.hasConnection();
 
     if (hasConnection) {
-      response = await this.api.login(login, password);
+      response = await api.login(login, password);
     } else {
       response.message = "Device offline";
     }

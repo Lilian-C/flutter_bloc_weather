@@ -1,5 +1,6 @@
 class ForecastModel {
   int? dt;
+  // ignore: non_constant_identifier_names
   String? dt_txt;
   Main? main;
   List<Weather>? weather;
@@ -14,19 +15,18 @@ class ForecastModel {
     this.visibility,
   });
 
-  static List<ForecastModel> fromJsonList(List<dynamic> json) =>
-      json.map((i) => ForecastModel.fromJson(i)).toList();
+  static List<ForecastModel> fromJsonList(List<dynamic> json) => json.map((i) => ForecastModel.fromJson(i)).toList();
 
   ForecastModel.fromJson(Map<String, dynamic> json) {
     dt = json['dt'];
-    main = json['main'] != null ? new Main.fromJson(json['main']) : null;
+    main = json['main'] != null ? Main.fromJson(json['main']) : null;
     if (json['weather'] != null) {
       weather = <Weather>[];
       json['weather'].forEach((v) {
-        weather!.add(new Weather.fromJson(v));
+        weather!.add(Weather.fromJson(v));
       });
     }
-    wind = json['wind'] != null ? new Wind.fromJson(json['wind']) : null;
+    wind = json['wind'] != null ? Wind.fromJson(json['wind']) : null;
     visibility = json['visibility'];
     dt_txt = json['dt_txt'];
   }
@@ -39,12 +39,7 @@ class Main {
   double? tempMax;
   double? tempKf;
 
-  Main(
-      {this.temp,
-        this.feelsLike,
-        this.tempMin,
-        this.tempMax,
-        this.tempKf});
+  Main({this.temp, this.feelsLike, this.tempMin, this.tempMax, this.tempKf});
 
   Main.fromJson(Map<String, dynamic> json) {
     temp = json['temp'].toDouble();

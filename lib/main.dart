@@ -24,7 +24,7 @@ void main() => runApp(
             child: const LoginPage(),
           ),
           BlocProvider(
-            create: (context) => ForecastBloc(
+            create: (context) => ForecastCubit(
               ForecastRepository(
                 ForecastService(),
                 ConnectionHelper(),
@@ -33,6 +33,6 @@ void main() => runApp(
             child: const ForecastSearchPage(),
           ),
         ],
-        child: MyApp(),
+        child: const MyApp(),
       ),
     );
